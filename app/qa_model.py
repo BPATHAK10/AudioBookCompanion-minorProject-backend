@@ -1,7 +1,7 @@
 from transformers import AutoTokenizer, pipeline, AutoModelForQuestionAnswering
 
-model = AutoModelForQuestionAnswering.from_pretrained("./app/mobilebert-uncased-squad-v2")
-tokenizer = AutoTokenizer.from_pretrained("./app/mobilebert-uncased-squad-v2")
+model = AutoModelForQuestionAnswering.from_pretrained("./app/mobilebert-squad")
+tokenizer = AutoTokenizer.from_pretrained("./app/mobilebert-squad")
 
 qa_pipeline = pipeline(
     "question-answering",
