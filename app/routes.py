@@ -93,9 +93,9 @@ def do_qa():
         request_data = request.data
         request_data = json.loads(request_data.decode('utf-8'))
         question = request_data['question']
-        current_title = request_data['title']
+        current_text = request_data['textId']
         userid = request_data['user_id']
-        _text = Text.query.filter_by(title=current_title,user_id=userid).first()
+        _text = Text.query.filter_by(id=current_text,user_id=userid).first()
         answer = get_answer(_text.content,question)
         print (answer)
         return answer
