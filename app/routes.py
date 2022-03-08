@@ -21,7 +21,7 @@ def login():
         if (_user):
             if (_user.username and _user.password == passwd):
                 print ("Yes it is validated: ")
-                return str(_user.id)
+                return jsonify(_user.serialize)
             else:
                 return "404"
         else:
@@ -29,16 +29,18 @@ def login():
 
 @app.route('/register',methods=['POST','GET'])
 def register():
+    print ("is there")
     if (request.method == 'POST'):
         request_data = request.data
         request_data = json.loads(request_data.decode('utf-8'))
+        fname = request_data['fullname']
         uname = request_data['username']
         passwd = request_data['password']
         _user = User.query.filter_by(username=uname).first()
         if (_user):
             return "404"
         else:
-            newuser = User(uname,passwd)
+            newuser = User(fname,uname,passwd)
             db.session.add(newuser)
             db.session.commit()
             return str(newuser.id)
@@ -60,6 +62,7 @@ def add_data():
         request_data = json.loads(request_data.decode('utf-8'))
         atitle = request_data['title']
         content = request_data['content']
+        date = request_data['date']
         userid = request_data['user_id']
         _text = Text.query.filter_by(title=atitle, user_id=userid).first()
         if (_text):
@@ -67,7 +70,7 @@ def add_data():
             db.session.commit()
             return str(_text.id)
         else:
-            text = Text(title=atitle,content=content, user_id=userid)
+            text = Text(title=atitle,content=content,date=date,user_id=userid)
             db.session.add(text)
             db.session.commit()
             return str(text.id)
